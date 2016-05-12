@@ -86,5 +86,15 @@ namespace FTPClient
             }
         }
 
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            if (selectedServer != -1)
+            {
+                var server = serverList[selectedServer];
+                frmMain main = new frmMain(server.host, server.port, server.user, server.pass);
+                main.Show();
+            }
+        }
+
     }
 }

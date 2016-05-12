@@ -46,6 +46,7 @@
             this.checkAnonymous.TabIndex = 0;
             this.checkAnonymous.Text = "使用匿名登录";
             this.checkAnonymous.UseVisualStyleBackColor = true;
+            this.checkAnonymous.CheckedChanged += new System.EventHandler(this.checkAnonymous_CheckedChanged);
             // 
             // lbUser
             // 
@@ -87,6 +88,7 @@
             this.btnLogin.TabIndex = 5;
             this.btnLogin.Text = "登录";
             this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // btnCancel
             // 
@@ -96,6 +98,7 @@
             this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // frmLogin
             // 

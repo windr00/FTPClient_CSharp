@@ -15,6 +15,24 @@ namespace FTPClient
 
         public event CMDRequest OnCMDRequest;
 
+        private class NetworkHandler : AsyncEvent
+        {
+            public override void OnConnect(IAsyncResult ar)
+            {
+                base.OnConnect(ar);
+            }
+
+            public override void OnRecv(IAsyncResult ar)
+            {
+                base.OnRecv(ar);
+            }
+
+            public override void OnSend(IAsyncResult ar)
+            {
+                base.OnSend(ar);
+            }
+        }
+
         public void OnResponse(string rsp)
         {
             

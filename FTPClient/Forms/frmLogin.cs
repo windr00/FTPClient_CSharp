@@ -14,13 +14,51 @@ namespace FTPClient.Forms
     {
         private string user;
         private string pass;
-        public frmLogin(string user, string pass)
+
+        public delegate void Close(string user, string pass);
+
+        public event Close OnClose;
+        public frmLogin(string user, string pass, Close c)
         {
             this.user = user;
             this.pass = pass;
             InitializeComponent();
             txtUser.Text = user;
             txtPass.Text = pass;
+            if (user.Equals("anonymous"))
+            {
+                checkAnonymous.Checked = true;
+            }
+            OnClose += c;
         }
+
+        private void checkAnonymous_CheckedChanged(object sender, EventArgs e)
+        {
+            txtUser.Enabled = !checkAnonymous.Checked;
+            txtPass.Enabled = !checkAnonymous.Checked;
+            txtUser.Text = "anonymous";
+            txtPass.Text = "test";
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            if (txtUser.Text != string.Empty && txtPass.Text != string.Empty)
+            {
+                OnClose(txtUser.Text, txtPass.Text);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("请输入完整登录信息", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            OnClose(user, pass);
+            this.Close();
+        }
+
+
     }
 }

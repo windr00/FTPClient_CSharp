@@ -27,6 +27,7 @@ namespace FTPClient
 
         private ManualResetEvent re = new ManualResetEvent(false);
 
+
         public ManualResetEvent AsyncEvent
         {
             get { return re; }

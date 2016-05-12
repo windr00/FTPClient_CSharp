@@ -53,6 +53,7 @@
             this.btnConnect.TabIndex = 1;
             this.btnConnect.Text = "连接";
             this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // btnNew
             // 
