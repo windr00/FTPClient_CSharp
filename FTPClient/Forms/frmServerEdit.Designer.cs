@@ -47,7 +47,7 @@
             this.lbServerAddr.AutoSize = true;
             this.lbServerAddr.Location = new System.Drawing.Point(22, 29);
             this.lbServerAddr.Name = "lbServerAddr";
-            this.lbServerAddr.Size = new System.Drawing.Size(134, 31);
+            this.lbServerAddr.Size = new System.Drawing.Size(68, 17);
             this.lbServerAddr.TabIndex = 0;
             this.lbServerAddr.Text = "服务器地址";
             // 
@@ -55,7 +55,7 @@
             // 
             this.txtServerAddr.Location = new System.Drawing.Point(167, 29);
             this.txtServerAddr.Name = "txtServerAddr";
-            this.txtServerAddr.Size = new System.Drawing.Size(234, 39);
+            this.txtServerAddr.Size = new System.Drawing.Size(234, 23);
             this.txtServerAddr.TabIndex = 1;
             // 
             // lbServerPort
@@ -63,7 +63,7 @@
             this.lbServerPort.AutoSize = true;
             this.lbServerPort.Location = new System.Drawing.Point(22, 76);
             this.lbServerPort.Name = "lbServerPort";
-            this.lbServerPort.Size = new System.Drawing.Size(158, 31);
+            this.lbServerPort.Size = new System.Drawing.Size(80, 17);
             this.lbServerPort.TabIndex = 2;
             this.lbServerPort.Text = "服务器端口号";
             // 
@@ -72,7 +72,7 @@
             this.checkAnnoymous.AutoSize = true;
             this.checkAnnoymous.Location = new System.Drawing.Point(28, 214);
             this.checkAnnoymous.Name = "checkAnnoymous";
-            this.checkAnnoymous.Size = new System.Drawing.Size(190, 35);
+            this.checkAnnoymous.Size = new System.Drawing.Size(99, 21);
             this.checkAnnoymous.TabIndex = 4;
             this.checkAnnoymous.Text = "使用匿名登录";
             this.checkAnnoymous.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             this.lbUserName.AutoSize = true;
             this.lbUserName.Location = new System.Drawing.Point(25, 258);
             this.lbUserName.Name = "lbUserName";
-            this.lbUserName.Size = new System.Drawing.Size(86, 31);
+            this.lbUserName.Size = new System.Drawing.Size(44, 17);
             this.lbUserName.TabIndex = 5;
             this.lbUserName.Text = "用户名";
             // 
@@ -91,7 +91,7 @@
             // 
             this.txtUserName.Location = new System.Drawing.Point(167, 255);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(234, 39);
+            this.txtUserName.Size = new System.Drawing.Size(234, 23);
             this.txtUserName.TabIndex = 6;
             // 
             // lbUserPass
@@ -99,7 +99,7 @@
             this.lbUserPass.AutoSize = true;
             this.lbUserPass.Location = new System.Drawing.Point(25, 303);
             this.lbUserPass.Name = "lbUserPass";
-            this.lbUserPass.Size = new System.Drawing.Size(62, 31);
+            this.lbUserPass.Size = new System.Drawing.Size(32, 17);
             this.lbUserPass.TabIndex = 7;
             this.lbUserPass.Text = "密码";
             // 
@@ -107,7 +107,7 @@
             // 
             this.txtPass.Location = new System.Drawing.Point(167, 300);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(234, 39);
+            this.txtPass.Size = new System.Drawing.Size(234, 23);
             this.txtPass.TabIndex = 8;
             // 
             // btnTest
@@ -144,7 +144,7 @@
             0,
             0});
             this.numPort.Name = "numPort";
-            this.numPort.Size = new System.Drawing.Size(120, 39);
+            this.numPort.Size = new System.Drawing.Size(120, 23);
             this.numPort.TabIndex = 3;
             this.numPort.Value = new decimal(new int[] {
             22,
@@ -154,7 +154,7 @@
             // 
             // frmServerEdit
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 430);
             this.Controls.Add(this.numPort);
@@ -175,6 +175,7 @@
             this.MinimizeBox = false;
             this.Name = "frmServerEdit";
             this.Text = "编辑连接设置";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmServerEdit_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

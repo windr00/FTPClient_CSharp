@@ -2,7 +2,6 @@ E:\课程设计\FTPClient\FTPClient\bin\Debug\FTPClient.exe.config
 E:\课程设计\FTPClient_CSharp\FTPClient\bin\Debug\FTPClient.exe.config
 E:\课程设计\FTPClient_CSharp\FTPClient\bin\Debug\FTPClient.exe
 E:\课程设计\FTPClient_CSharp\FTPClient\bin\Debug\FTPClient.pdb
-E:\课程设计\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.csprojResolveAssemblyReference.cache
 E:\课程设计\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.frmMain.resources
 E:\课程设计\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.Properties.Resources.resources
 E:\课程设计\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.csproj.GenerateResource.Cache
@@ -24,3 +23,4 @@ Z:\Desktop\桌面文件\UESTC\大三下学期\课程设计\ClassDesign\FTPClient
 Z:\Desktop\桌面文件\UESTC\大三下学期\课程设计\ClassDesign\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.csproj.GenerateResource.Cache
 Z:\Desktop\桌面文件\UESTC\大三下学期\课程设计\ClassDesign\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.exe
 Z:\Desktop\桌面文件\UESTC\大三下学期\课程设计\ClassDesign\FTPClient_CSharp\FTPClient\obj\Debug\FTPClient.pdb
+E:\课程设计\FTPClient_CSharp\FTPClient\bin\Debug\LitJson.dll

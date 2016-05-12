@@ -25,6 +25,7 @@ namespace FTPClient
 
         public frmServerEdit(OnServerAdded handle, string host, int port, string user, string pass)
         {
+            InitializeComponent();
             txtServerAddr.Text = host;
             txtUserName.Text = user;
             txtPass.Text = pass;
@@ -37,13 +38,14 @@ namespace FTPClient
         {
             public override void OnConnect(IAsyncResult ar)
             {
-                var client = (ar.AsyncState as AsyncState).instance ;
+                var client = (ar.AsyncState as AsyncState).client ;
                 try
                 {
                     if (!client.Connected)
                     {
                         throw new Exception();
                     }
+                    client.EndConnect(ar);
                     base.OnConnect(ar);
                 }
                 catch (Exception e)
@@ -136,6 +138,11 @@ namespace FTPClient
             {
                 MessageBox.Show("连接信息不完整", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void frmServerEdit_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            OnAdd(string.Empty, 0, string.Empty, string.Empty);
         }
 
     }

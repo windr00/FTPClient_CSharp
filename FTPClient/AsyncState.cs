@@ -11,10 +11,14 @@ namespace FTPClient
     class AsyncState
     {
 
-        public TCPNetwork instance
+        public ManualResetEvent re { get; private set; }
+
+        public void SetAsyncEvent(ref ManualResetEvent r)
         {
-            get; set; 
+            re = r;
         }
+
+        public TcpClient client { get; set; }
 
         private byte[] _buffer;
 

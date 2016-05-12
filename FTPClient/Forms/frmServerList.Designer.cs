@@ -38,12 +38,12 @@
             // listServer
             // 
             this.listServer.FormattingEnabled = true;
-            this.listServer.ItemHeight = 31;
+            this.listServer.ItemHeight = 17;
             this.listServer.Location = new System.Drawing.Point(13, 13);
             this.listServer.Name = "listServer";
-            this.listServer.Size = new System.Drawing.Size(574, 252);
+            this.listServer.Size = new System.Drawing.Size(574, 242);
             this.listServer.TabIndex = 0;
-            this.listServer.SelectedIndexChanged += new System.EventHandler(this.listServer_SelectedIndexChanged);
+            this.listServer.SelectedValueChanged += new System.EventHandler(this.listServer_SelectedIndexChanged);
             // 
             // btnConnect
             // 
@@ -86,7 +86,7 @@
             // 
             // frmServerList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 355);
             this.Controls.Add(this.btnDel);

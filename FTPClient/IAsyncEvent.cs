@@ -8,28 +8,19 @@ namespace FTPClient
 {
     class AsyncEvent
     {
-        private void SetAsyncEvent(TCPNetwork ins)
+        private void SetAsyncEvent(IAsyncResult ar)
         {
-            ins.AsyncEvent.Set();
+            (ar.AsyncState as AsyncState).re.Set();
         }
 
         public virtual void OnConnect(IAsyncResult ar)
         {
-            try
-            {
-                var instance = (ar.AsyncState as AsyncState).instance;
-                instance.client.EndConnect(ar);
-                SetAsyncEvent(instance);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            SetAsyncEvent(ar);
         }
 
         public virtual void OnSend(IAsyncResult ar)
         {
-            SetAsyncEvent((ar.AsyncState as AsyncState).instance);            
+            SetAsyncEvent(ar);
         }
 
         public virtual void OnRecv(IAsyncResult ar)

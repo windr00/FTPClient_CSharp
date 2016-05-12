@@ -8,19 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FTPClient
+namespace FTPClient.Forms
 {
-    public partial class frmMain : Form
+    public partial class frmLogin : Form
     {
-        public frmMain(string host, int port)
+        public frmLogin()
         {
             InitializeComponent();
         }
-
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

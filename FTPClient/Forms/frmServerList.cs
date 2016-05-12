@@ -21,16 +21,24 @@ namespace FTPClient
             InitializeComponent();
         }
 
-        private void OnServerAdded(string host, int port, string user, string pass)
+        private void RefreshList()
         {
-            var server = new ServerProfile(host, port, user, pass);
-            serverList.Add(server);
             listServer.Items.Clear();
             foreach (var i in serverList)
             {
-                listServer.Items.Add(server);
+                listServer.Items.Add(i);
             }
-            this.Enabled = true;
+        }
+
+        private void OnServerAdded(string host, int port, string user, string pass)
+        {
+            if (port != 0)
+            {
+                var server = new ServerProfile(host, port, user, pass);
+                serverList.Add(server);
+                RefreshList();
+            }
+                this.Enabled = true;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -44,8 +52,8 @@ namespace FTPClient
         {
             if (selectedServer != -1)
             {
-                listServer.Items.RemoveAt(selectedServer);
                 serverList.RemoveAt(selectedServer);
+                RefreshList();
             }
 
         }
@@ -57,12 +65,26 @@ namespace FTPClient
 
         private void OnServerEdited(string host, int port, string user, string pass)
         {
-
+            if (port != 0)
+            {
+                var server = new ServerProfile(host, port, user, pass);
+                serverList[selectedServer] = server;
+                RefreshList();
+            }
+            this.Enabled = true;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            frmServerEdit editor = new frmServerEdit(OnServerEdited);
+            if (selectedServer != -1)
+            {
+                var server = serverList[selectedServer];
+                frmServerEdit editor = new frmServerEdit(OnServerEdited, server.host, server.port, server.user, server.pass);
+                this.Enabled = false;
+                editor.Show();
+                
+            }
         }
+
     }
 }
