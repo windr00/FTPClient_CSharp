@@ -23,5 +23,10 @@ namespace FTPClient
             user = u;
             pass = p;
         }
+
+        public override string ToString()
+        {
+            return host + ":" + port.ToString();
+        }
     }
 }

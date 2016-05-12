@@ -11,18 +11,7 @@ namespace FTPClient
     class AsyncState
     {
 
-        private ManualResetEvent re;
-
-        public ManualResetEvent AsyncEvent
-        {
-            get { return re; }
-        }
-
-        public void SetAsyncEvent(ref ManualResetEvent re)
-        {
-            this.re = re;
-        }
-        public TcpClient client
+        public TCPNetwork instance
         {
             get; set; 
         }

@@ -75,6 +75,7 @@
     <Compile Include="IAsyncEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerProfile.cs" />
     <Compile Include="Statics.cs" />
     <Compile Include="TCPNetwork.cs" />
     <EmbeddedResource Include="Forms\frmMain.resx">

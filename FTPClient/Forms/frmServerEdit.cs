@@ -23,19 +23,27 @@ namespace FTPClient
             OnAdd += handle;
         }
 
+        public frmServerEdit(OnServerAdded handle, string host, int port, string user, string pass)
+        {
+            txtServerAddr.Text = host;
+            txtUserName.Text = user;
+            txtPass.Text = pass;
+            numPort.Value = port;
+            OnAdd += handle;
+        }
+
 
         private class EventHandle : AsyncEvent
         {
             public override void OnConnect(IAsyncResult ar)
             {
-                var client = (ar.AsyncState as AsyncState).client;
+                var client = (ar.AsyncState as AsyncState).instance ;
                 try
                 {
                     if (!client.Connected)
                     {
                         throw new Exception();
                     }
-                    client.EndConnect(ar);
                     base.OnConnect(ar);
                 }
                 catch (Exception e)

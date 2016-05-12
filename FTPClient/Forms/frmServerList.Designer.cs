@@ -43,6 +43,7 @@
             this.listServer.Name = "listServer";
             this.listServer.Size = new System.Drawing.Size(574, 252);
             this.listServer.TabIndex = 0;
+            this.listServer.SelectedIndexChanged += new System.EventHandler(this.listServer_SelectedIndexChanged);
             // 
             // btnConnect
             // 
@@ -71,6 +72,7 @@
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "编辑";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDel
             // 
@@ -78,8 +80,9 @@
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(131, 48);
             this.btnDel.TabIndex = 4;
-            this.btnDel.Text = "退出";
+            this.btnDel.Text = "删除";
             this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // frmServerList
             // 

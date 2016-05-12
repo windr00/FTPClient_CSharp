@@ -13,7 +13,16 @@ namespace FTPClient
     class TCPNetwork
     {
 
-        private TcpClient client;
+        public TcpClient client {
+            public get;
+            private set;
+        }
+
+        public bool Connected
+        {
+            get;
+            set;
+        }
 
         private string host;
         private int port;
@@ -49,7 +58,7 @@ namespace FTPClient
             try
             {
                 var state = new AsyncState();
-                state.client = client;
+                state.instance = this;
                 
                 state.SetAsyncEvent(ref this.re);
                 client.BeginConnect(host, port, handler.OnConnect, state);
@@ -66,7 +75,7 @@ namespace FTPClient
             try
             {
                 var state = new AsyncState();
-                state.client = client;
+                state.instance = this ;
                 state.SetAsyncEvent(ref this.re);
                 client.GetStream().BeginRead(state.buffer, 0, Statics.RECV_BUFFER_SIZE, handler.OnRecv, state);
             }
