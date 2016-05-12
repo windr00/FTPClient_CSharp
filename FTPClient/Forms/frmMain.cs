@@ -12,15 +12,21 @@ namespace FTPClient
 {
     public partial class frmMain : Form
     {
-        public frmMain(string host, int port)
+        private string host;
+        private int port;
+        private string user;
+        private string pass;
+
+        public frmMain(string host, int port, string user, string pass)
         {
+            this.host = host;
+            this.port = port;
+            this.user = user;
+            this.pass = pass;
             InitializeComponent();
+            
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-
-        }
 
     }
 }

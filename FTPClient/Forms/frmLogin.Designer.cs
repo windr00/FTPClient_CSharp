@@ -31,8 +31,8 @@
             this.checkAnonymous = new System.Windows.Forms.CheckBox();
             this.lbUser = new System.Windows.Forms.Label();
             this.lbPass = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.txtPass = new System.Windows.Forms.MaskedTextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -65,19 +65,19 @@
             this.lbPass.TabIndex = 2;
             this.lbPass.Text = "密码";
             // 
-            // textBox1
+            // txtUser
             // 
-            this.textBox1.Location = new System.Drawing.Point(102, 88);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(187, 23);
-            this.textBox1.TabIndex = 3;
+            this.txtUser.Location = new System.Drawing.Point(102, 88);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(187, 23);
+            this.txtUser.TabIndex = 3;
             // 
-            // maskedTextBox1
+            // txtPass
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(102, 132);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(187, 23);
-            this.maskedTextBox1.TabIndex = 4;
+            this.txtPass.Location = new System.Drawing.Point(102, 132);
+            this.txtPass.Name = "txtPass";
+            this.txtPass.Size = new System.Drawing.Size(187, 23);
+            this.txtPass.TabIndex = 4;
             // 
             // btnLogin
             // 
@@ -104,8 +104,8 @@
             this.ClientSize = new System.Drawing.Size(335, 252);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.maskedTextBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtPass);
+            this.Controls.Add(this.txtUser);
             this.Controls.Add(this.lbPass);
             this.Controls.Add(this.lbUser);
             this.Controls.Add(this.checkAnonymous);
@@ -126,8 +126,8 @@
         private System.Windows.Forms.CheckBox checkAnonymous;
         private System.Windows.Forms.Label lbUser;
         private System.Windows.Forms.Label lbPass;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.MaskedTextBox txtPass;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnCancel;
     }

@@ -12,9 +12,15 @@ namespace FTPClient.Forms
 {
     public partial class frmLogin : Form
     {
-        public frmLogin()
+        private string user;
+        private string pass;
+        public frmLogin(string user, string pass)
         {
+            this.user = user;
+            this.pass = pass;
             InitializeComponent();
+            txtUser.Text = user;
+            txtPass.Text = pass;
         }
     }
 }

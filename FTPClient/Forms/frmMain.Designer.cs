@@ -45,9 +45,9 @@
             // 
             // listView1
             // 
-            this.listView1.Location = new System.Drawing.Point(335, 76);
+            this.listView1.Location = new System.Drawing.Point(335, 62);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(928, 595);
+            this.listView1.Size = new System.Drawing.Size(928, 609);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -90,7 +90,6 @@
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmMain";
-            this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
