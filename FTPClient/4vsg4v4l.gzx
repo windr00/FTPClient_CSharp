@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace FTPClient
 {
-    class CMDAgent : IAsyncEvent
+    class CMDAgent : AsyncEvent
     {
         private string host;
         private int port;
@@ -15,24 +14,12 @@ namespace FTPClient
         private string pass;
         private TCPNetwork client;
 
-        public Encoding encoding = Encoding.UTF8;
-
-        public void OnConnect(IAsyncResult ar)
+        public override void OnConnect(IAsyncResult ar)
         {
-            try
-            {
-                var state = ar.AsyncState as AsyncState;
-                state.client.EndConnect(ar);
-                client.Recv();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("服务器连接异常", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw e;
-            }
+            base.OnConnect(ar);
         }
 
-        public void OnRecv(IAsyncResult ar)
+        public override void OnRecv(IAsyncResult ar)
         {
             try
             {
@@ -40,29 +27,26 @@ namespace FTPClient
                 var length = state.client.GetStream().EndRead(ar);
                 byte[] buff = new byte[length];
                 Array.Copy(state.buffer, buff, length);
-                string recv = encoding.GetString(buff);
-                
-                OnResponse(recv);
+                string recv = Encoding.UTF8.GetString(buff);
+                base.OnRecv(ar);
             }
             catch (Exception e)
             {
-                throw e;
+                base.OnRecv(ar);
             }
         }
 
-        public void OnSend(IAsyncResult ar)
+        public override void OnSend(IAsyncResult ar)
         {
-
+            base.OnSend(ar);
         }
 
         private void OnRequest(string req)
         {
             
         }
-
         private void OnResponse(string rsp)
         {
-            Console.WriteLine(rsp);
             
         }
 

@@ -44,6 +44,7 @@
             this.listServer.Size = new System.Drawing.Size(574, 242);
             this.listServer.TabIndex = 0;
             this.listServer.SelectedValueChanged += new System.EventHandler(this.listServer_SelectedIndexChanged);
+            this.listServer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listServer_MouseDoubleClick);
             // 
             // btnConnect
             // 

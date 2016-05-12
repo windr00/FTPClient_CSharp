@@ -96,5 +96,10 @@ namespace FTPClient
             }
         }
 
+        private void listServer_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            btnConnect_Click(null, null);
+        }
+
     }
 }

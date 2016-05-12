@@ -19,6 +19,7 @@ namespace FTPClient
         private string pass;
         private CMDAgent agent;
 
+
         public frmMain(string host, int port, string user, string pass)
         {
             this.host = host;
@@ -27,9 +28,10 @@ namespace FTPClient
             this.pass = pass;
             InitializeComponent();
             this.Text = user + "@" + host + ":" + port;
+
         }
 
-        
+
 
         public void OnfrmLoginClose(string user, string pass)
         {
@@ -37,7 +39,7 @@ namespace FTPClient
             this.pass = pass;
             this.Enabled = true;
             frmMain_Load(null, null);
-            
+
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -45,12 +47,11 @@ namespace FTPClient
             if (!(user != string.Empty && pass != string.Empty))
             {
                 frmLogin login = new frmLogin(user, pass, OnfrmLoginClose);
-                login.Show();
                 this.Enabled = false;
+                login.Show();
             }
-            else
-            {
-            }
+            agent = new CMDAgent(host, port, user, pass);
+            agent.Login();
         }
 
 

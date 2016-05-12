@@ -34,9 +34,9 @@ namespace FTPClient
         }
 
 
-        private class EventHandle : AsyncEvent
+        private class EventHandle : IAsyncEvent
         {
-            public override void OnConnect(IAsyncResult ar)
+            public void OnConnect(IAsyncResult ar)
             {
                 var client = (ar.AsyncState as AsyncState).client ;
                 try
@@ -46,21 +46,19 @@ namespace FTPClient
                         throw new Exception();
                     }
                     client.EndConnect(ar);
-                    base.OnConnect(ar);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("连接服务器失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    base.OnConnect(ar);
                 }
             }
 
-            public override void OnSend(IAsyncResult ar)
+            public void OnSend(IAsyncResult ar)
             {
                 throw new NotImplementedException();
             }
 
-            public override void OnRecv(IAsyncResult ar)
+            public void OnRecv(IAsyncResult ar)
             {
                 var state = ar.AsyncState as AsyncState;
                 var buff = state.buffer;
@@ -79,10 +77,7 @@ namespace FTPClient
                     {
                         throw new Exception();
                     }
-                    else
-                    {
-                        MessageBox.Show("连接成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    MessageBox.Show("连接成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception e)
                 {

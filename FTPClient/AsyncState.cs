@@ -28,7 +28,7 @@ namespace FTPClient
             {
                 if (_buffer == null)
                 {
-                    _buffer = new byte[Statics.RECV_BUFFER_SIZE];
+                    _buffer = new byte[Statics.NET_READ_BUFFER_LENGTH];
                 }
                 return _buffer;
             }
