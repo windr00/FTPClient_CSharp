@@ -85,7 +85,7 @@ namespace FTPClient
                 var state = new AsyncState();
                 state.client = client ;
                 state.SetAsyncEvent(ref this.re);
-                client.GetStream().BeginRead(state.buffer, 0, Statics.RECV_BUFFER_SIZE, delegate(IAsyncResult ar)
+                client.GetStream().BeginRead(state.buffer, 0, Statics.NET_READ_BUFFER_LENGTH, delegate(IAsyncResult ar)
                 {
                     try
                     {
