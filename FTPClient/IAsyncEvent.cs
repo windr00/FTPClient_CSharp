@@ -10,7 +10,7 @@ namespace FTPClient
     {
         private void SetAsyncEvent(IAsyncResult ar)
         {
-            var re = (ar as AsyncState).AsyncEvent;
+            var re = (ar.AsyncState as AsyncState).AsyncEvent;
             re.Set();
         }
 

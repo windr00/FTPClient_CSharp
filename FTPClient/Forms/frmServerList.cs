@@ -12,16 +12,24 @@ namespace FTPClient
 {
     public partial class frmServerList : Form
     {
+
+
         public frmServerList()
         {
             InitializeComponent();
         }
 
+
+
+        private void OnServerAdded(string host, int port, string user, string pass)
+        {
+
+        }
+
         private void btnNew_Click(object sender, EventArgs e)
         {
-            frmServerEdit edit = new frmServerEdit();
+            frmServerEdit edit = new frmServerEdit(OnServerAdded);
             this.Enabled = false;
-            this.Hide();
             edit.Show();
         }
     }

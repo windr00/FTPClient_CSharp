@@ -18,6 +18,7 @@ namespace FTPClient
         [STAThread]
         static void Main()
         {
+            SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmServerList());

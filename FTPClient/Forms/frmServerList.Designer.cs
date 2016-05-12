@@ -38,26 +38,26 @@
             // listServer
             // 
             this.listServer.FormattingEnabled = true;
-            this.listServer.ItemHeight = 17;
+            this.listServer.ItemHeight = 31;
             this.listServer.Location = new System.Drawing.Point(13, 13);
             this.listServer.Name = "listServer";
-            this.listServer.Size = new System.Drawing.Size(414, 276);
+            this.listServer.Size = new System.Drawing.Size(574, 252);
             this.listServer.TabIndex = 0;
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(13, 306);
+            this.btnConnect.Location = new System.Drawing.Point(13, 286);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(99, 32);
+            this.btnConnect.Size = new System.Drawing.Size(131, 48);
             this.btnConnect.TabIndex = 1;
             this.btnConnect.Text = "连接";
             this.btnConnect.UseVisualStyleBackColor = true;
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(118, 306);
+            this.btnNew.Location = new System.Drawing.Point(159, 286);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(99, 32);
+            this.btnNew.Size = new System.Drawing.Size(131, 48);
             this.btnNew.TabIndex = 2;
             this.btnNew.Text = "新建";
             this.btnNew.UseVisualStyleBackColor = true;
@@ -65,27 +65,27 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(223, 306);
+            this.btnEdit.Location = new System.Drawing.Point(308, 286);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(99, 32);
+            this.btnEdit.Size = new System.Drawing.Size(131, 48);
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "编辑";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(328, 306);
+            this.btnDel.Location = new System.Drawing.Point(456, 286);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(99, 32);
+            this.btnDel.Size = new System.Drawing.Size(131, 48);
             this.btnDel.TabIndex = 4;
             this.btnDel.Text = "退出";
             this.btnDel.UseVisualStyleBackColor = true;
             // 
-            // frmSeverList
+            // frmServerList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(439, 351);
+            this.ClientSize = new System.Drawing.Size(599, 355);
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnNew);
@@ -95,7 +95,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.Name = "frmSeverList";
+            this.Name = "frmServerList";
             this.Text = "FTP服务器列表";
             this.ResumeLayout(false);
 

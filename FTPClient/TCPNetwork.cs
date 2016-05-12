@@ -50,6 +50,7 @@ namespace FTPClient
             {
                 var state = new AsyncState();
                 state.client = client;
+                
                 state.SetAsyncEvent(ref this.re);
                 client.BeginConnect(host, port, handler.OnConnect, state);
                 return this;

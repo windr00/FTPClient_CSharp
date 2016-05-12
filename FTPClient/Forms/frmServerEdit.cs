@@ -13,39 +13,71 @@ namespace FTPClient
 {
     public partial class frmServerEdit : Form
     {
-        public frmServerEdit()
+        public delegate void OnServerAdded(string host, int port, string user, string pass);
+
+        private event OnServerAdded OnAdd;
+
+        public frmServerEdit(OnServerAdded handle)
         {
             InitializeComponent();
+            OnAdd += handle;
         }
 
 
         private class EventHandle : AsyncEvent
         {
-            public void OnConnect(IAsyncResult ar)
+            public override void OnConnect(IAsyncResult ar)
             {
-                var client = ar.AsyncState as TcpClient;
+                var client = (ar.AsyncState as AsyncState).client;
                 try
                 {
                     if (!client.Connected)
                     {
-                        MessageBox.Show("连接服务器失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        throw new Exception();
                     }
                     client.EndConnect(ar);
+                    base.OnConnect(ar);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("连接服务器失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    base.OnConnect(ar);
                 }
             }
 
-            public void OnSend(IAsyncResult ar)
+            public override void OnSend(IAsyncResult ar)
             {
                 throw new NotImplementedException();
             }
 
-            public void OnRecv(IAsyncResult ar)
+            public override void OnRecv(IAsyncResult ar)
             {
-                throw new NotImplementedException();
+                var state = ar.AsyncState as AsyncState;
+                var buff = state.buffer;
+                var client = state.client;
+                try
+                {
+                    if (client == null || !client.Connected)
+                    {
+                        throw new Exception();
+                    }
+                    var stream = client.GetStream();
+                    int recvLength = stream.EndRead(ar);
+                    byte[] recv = new byte[recvLength];
+                    Array.Copy(buff, recv, recvLength);
+                    if (!Encoding.UTF8.GetString(recv).StartsWith("220"))
+                    {
+                        throw new Exception();
+                    }
+                    else
+                    {
+                        MessageBox.Show("连接成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("服务器通讯断开或不支持FTP服务", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -54,29 +86,49 @@ namespace FTPClient
             try
             {
                 string addr = txtServerAddr.Text;
-                int port = int.Parse(domPort.Text);
+                int port = (int)numPort.Value;
                 string user = txtUserName.Text;
                 string pass = txtPass.Text;
                 if (addr != string.Empty)
                 {
-                    if (checkAnnoymous.Checked)
-                    {
-                        TCPNetwork client = new TCPNetwork();
-                        client.SetAddress(addr, port).SetEventHandler(new EventHandle()).Connect().Sync().Recv();
-                    }
-                    else
-                    {
-                        if (user != string.Empty && pass != string.Empty)
-                        {
-                            
-                        }
-                    }
+                    TCPNetwork client = new TCPNetwork();
+                    client.SetAddress(addr, port)
+                        .SetEventHandler(new EventHandle())
+                        .Connect()
+                        .Sync()
+                        .Recv();
                 }
             }
             catch (Exception ex)
             {
-                
+
             }
         }
+
+        private void checkAnnoymous_CheckedChanged(object sender, EventArgs e)
+        {
+            txtUserName.Enabled = !checkAnnoymous.Checked;
+            txtPass.Enabled = !checkAnnoymous.Checked;
+            txtUserName.Text = "anonymous";
+            txtPass.Text = "test";
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            string host = txtServerAddr.Text;
+            int port = (int)numPort.Value;
+            string user = txtUserName.Text;
+            string pass = txtPass.Text;
+            if (host != string.Empty)
+            {
+                OnAdd(host, port, user, pass);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("连接信息不完整", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }
