@@ -17,43 +17,9 @@ namespace FTPClient
 
         public Encoding encoding = Encoding.UTF8;
 
-        public void OnConnect(IAsyncResult ar)
-        {
-            try
-            {
-                var state = ar.AsyncState as AsyncState;
-                state.client.EndConnect(ar);
-                client.Recv();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("服务器连接异常", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw e;
-            }
-        }
+        public Queue<string> cmdQueue = new Queue<string>();
 
-        public void OnRecv(IAsyncResult ar)
-        {
-            try
-            {
-                var state = ar.AsyncState as AsyncState;
-                var length = state.client.GetStream().EndRead(ar);
-                byte[] buff = new byte[length];
-                Array.Copy(state.buffer, buff, length);
-                string recv = encoding.GetString(buff);
-                
-                OnResponse(recv);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
 
-        public void OnSend(IAsyncResult ar)
-        {
-
-        }
 
         private void OnRequest(string req)
         {
@@ -81,6 +47,21 @@ namespace FTPClient
             {
                 client.SetAddress(host, port).SetEventHandler(this).Connect();
             }
+        }
+
+        public void OnConnect(bool ConnectState)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnSend()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnRecv(byte[] buffer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

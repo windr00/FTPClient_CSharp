@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AsyncState.cs" />
     <Compile Include="CMDAgent.cs" />
+    <Compile Include="CMDAgents\LoginAgent.cs" />
     <Compile Include="Forms\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>

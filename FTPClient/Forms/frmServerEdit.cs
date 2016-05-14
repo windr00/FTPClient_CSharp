@@ -36,53 +36,33 @@ namespace FTPClient
 
         private class EventHandle : IAsyncEvent
         {
-            public void OnConnect(IAsyncResult ar)
+            public void OnConnect(bool Connected)
             {
-                var client = (ar.AsyncState as AsyncState).client ;
-                try
-                {
-                    if (!client.Connected)
-                    {
-                        throw new Exception();
-                    }
-                    client.EndConnect(ar);
-                }
-                catch (Exception e)
+                if (!Connected)
                 {
                     MessageBox.Show("连接服务器失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
-            public void OnSend(IAsyncResult ar)
+            public void OnSend()
             {
                 throw new NotImplementedException();
             }
 
-            public void OnRecv(IAsyncResult ar)
+            public void OnRecv(byte[] recv)
             {
-                var state = ar.AsyncState as AsyncState;
-                var buff = state.buffer;
-                var client = state.client;
-                try
+
+
+                if (Encoding.UTF8.GetString(recv).StartsWith("220"))
                 {
-                    if (client == null || !client.Connected)
-                    {
-                        throw new Exception();
-                    }
-                    var stream = client.GetStream();
-                    int recvLength = stream.EndRead(ar);
-                    byte[] recv = new byte[recvLength];
-                    Array.Copy(buff, recv, recvLength);
-                    if (!Encoding.UTF8.GetString(recv).StartsWith("220"))
-                    {
-                        throw new Exception();
-                    }
                     MessageBox.Show("连接成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch (Exception e)
+
+                else
                 {
                     MessageBox.Show("服务器通讯断开或不支持FTP服务", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
             }
         }
 

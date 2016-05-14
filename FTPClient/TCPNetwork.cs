@@ -61,9 +61,10 @@ namespace FTPClient
                 {
                     try
                     {
-                        var re = (ar.AsyncState as AsyncState).re;
-                        re.Set();
-                        handler.OnConnect(ar);
+                        var s = ar.AsyncState as AsyncState;
+                        s.re.Set();
+                        state.client.EndConnect(ar);
+                        handler.OnConnect(client.Connected);
                     }
                     catch (Exception e)
                     {
@@ -89,9 +90,12 @@ namespace FTPClient
                 {
                     try
                     {
-                        var re = (ar.AsyncState as AsyncState).re;
-                        re.Set();
-                        handler.OnRecv(ar);
+                        var s = ar.AsyncState as AsyncState;
+                        s.re.Set();
+                        var length = s.client.GetStream().EndRead(ar);
+                        byte[] buff = new byte[length];
+                        Array.Copy(s.buffer,buff, length);
+                        handler.OnRecv(buff);
                     }
                     catch (Exception e)
                     {
@@ -117,9 +121,10 @@ namespace FTPClient
                 {
                     try
                     {
-                        var re = (ar.AsyncState as AsyncState).re;
-                        re.Set();
-                        handler.OnSend(ar);
+                        var s = ar.AsyncState as AsyncState;
+                        s.re.Set();
+                        s.client.GetStream().EndWrite(ar);
+                        handler.OnSend();
                     }
                     catch (Exception e)
                     {

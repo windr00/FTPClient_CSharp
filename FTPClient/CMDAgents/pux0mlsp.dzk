@@ -1,0 +1,89 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FTPClient.CMDAgents
+{
+    class LoginAgent : IAsyncEvent
+    {
+
+        private string host;
+        private int port;
+        private string user;
+        private string pass;
+
+        private TCPNetwork network;
+
+        public delegate void Done(Statics.CMD_TYPE type, bool state ,string content);
+
+        public event Done OnDone;
+
+        public LoginAgent(string host, int port, string user, string pass, ref TCPNetwork network)
+        {
+            this.host = host;
+            this.port = port;
+            this.user = user;
+            this.pass = pass;
+            this.network = network;
+            network.SetEventHandler(this);
+            if (!network.Connected)
+            {
+                network.Connect().Sync();
+            }
+            network.Recv();
+        }
+        public void OnConnect(IAsyncResult ar)
+        {
+            try
+            {
+                var state = ar.AsyncState as AsyncState;
+                state.client.EndConnect(ar);
+            }
+            catch (Exception e)
+            {
+                OnDone(Statics.CMD_TYPE.LOGIN, false, e.Message);
+            }
+        }
+
+        public void OnSend(IAsyncResult ar)
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                
+            }
+        }
+
+        public void OnRecv(IAsyncResult ar)
+        {
+            try
+            {
+                var state = ar.AsyncState as AsyncState;
+                var length = state.client.GetStream().EndRead(ar);
+                byte[] buff = new byte[length];
+                Array.Copy(state.buffer, buff, length);
+                string str = Encoding.UTF8.GetString(buff);
+                if (!str.StartsWith("220"))
+                {
+                    OnDone(Statics.CMD_TYPE.LOGIN, false, "Server state unknown");
+                    return;
+                }
+                SendUser();
+            }
+            catch (Exception e)
+            {
+                OnDone(Statics.CMD_TYPE.LOGIN, false, e.Message);
+            }
+        }
+
+        private void SendUser()
+        {
+            network.Send(Encoding.UTF8.GetBytes(Statics.USER_CMD + user + "\n"));
+        }
+    }
+}

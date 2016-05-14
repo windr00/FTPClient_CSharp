@@ -9,11 +9,11 @@ namespace FTPClient
     interface IAsyncEvent
     {
 
-        void OnConnect(IAsyncResult ar);
+        void OnConnect(bool ConnectState);
 
-        void OnSend(IAsyncResult ar);
+        void OnSend();
 
-        void OnRecv(IAsyncResult ar);
+        void OnRecv(byte[] buffer);
 
     }
 }
