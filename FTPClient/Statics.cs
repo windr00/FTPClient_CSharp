@@ -26,7 +26,7 @@ namespace FTPClient
         public static readonly string CDUP_CMD = "CDUP \n";
         public static readonly string FEAT_CMD = "FEAT \n";
         public static readonly string PORT_CMD = "PORT ";
-        public static readonly string PASV_CWD = "PWD ";
+        public static readonly string PASV_CMD = "PASV ";
         public static readonly string AUTH_CMD = "AUTH ";
         public static readonly string RETR_CMD = "RETR ";
         public static readonly string STOR_CMD = "STOR ";
@@ -42,7 +42,10 @@ namespace FTPClient
         public enum CMD_TYPE
         {
             LOGIN,
-            LSIT
+            LSIT,
+            CWD,
+            PWD,
+            PASV
         }
 
         public static readonly string CONNECT_SUCC = "220";
@@ -52,6 +55,17 @@ namespace FTPClient
         public static readonly string PASS_SUCC = "230";
 
         public static readonly string LOGIN_FAILED = "530";
+
+        public static readonly string CWD_SUCC = "250";
+
+        public static readonly string CWD_FAILED = "550";
+
+        public static readonly string PWD_SUCC = "257";
+
+        public static readonly string PASV_SUCC = "227";
+
+        public static readonly string PASV_FAILED = "500";
+
     }
 }
 

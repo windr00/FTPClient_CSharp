@@ -6,49 +6,30 @@ using System.Threading.Tasks;
 
 namespace FTPClient.CMDAgents
 {
-    class LoginAgent : IAsyncEvent
+    class LoginAgent : CommonAgent, IAsyncEvent
     {
 
         private string host;
         private int port;
         private string user;
         private string pass;
-        private bool _login = false;
 
-        public bool isLogin
-        {
-            get
-            {
-                return _login;
-            }
-            private set { _login = value; }
-        }
+        public bool isLogin { get; private set; } = false;
+        
 
-        private TCPNetwork network;
-
-        public delegate void Done(Statics.CMD_TYPE type, bool state, string content);
-
-        public event Done OnDone;
-
-        public LoginAgent(string host, int port, string user, string pass, ref TCPNetwork network)
+       
+        public LoginAgent(string host, int port, string user, string pass, ref TCPNetwork network, Done onDone) : base(ref network, onDone)
         {
             this.host = host;
             this.port = port;
             this.user = user;
             this.pass = pass;
-            this.network = network;
-            network.SetEventHandler(this);
-            if (!network.Connected)
-            {
-                network.Connect().Sync();
-            }
-            network.Recv();
         }
         public void OnConnect(bool Connected)
         {
             if (!Connected)
             {
-                OnDone(Statics.CMD_TYPE.LOGIN, false, "Error connecting server");
+                onDone(Statics.CMD_TYPE.LOGIN, false, "Error connecting server");
             }
         }
 
@@ -56,7 +37,7 @@ namespace FTPClient.CMDAgents
         {
             if (!isLogin)
             {
-                network.Recv();
+                client.Recv();
             }
         }
 
@@ -76,28 +57,38 @@ namespace FTPClient.CMDAgents
             else if (str.StartsWith(Statics.PASS_SUCC))
             {
                 isLogin = true;
-                OnDone(Statics.CMD_TYPE.LOGIN, true, str);
+                onDone(Statics.CMD_TYPE.LOGIN, true, str);
             }
             else if (str.StartsWith(Statics.LOGIN_FAILED))
             {
-                OnDone(Statics.CMD_TYPE.LOGIN, false, str);
+                onDone(Statics.CMD_TYPE.LOGIN, false, str);
             }
             else
             {
-                OnDone(Statics.CMD_TYPE.LOGIN, false, "Server state unknown");
+                onDone(Statics.CMD_TYPE.LOGIN, false, "Server state unknown");
                 return;  
             }
             
         }
 
+        public override void Start(string[] args)
+        {
+            client.SetEventHandler(this);
+            if (!client.Connected)
+            {
+                client.Connect().Sync();
+            }
+            client.Recv();
+        }
+
         private void SendUser()
         {
-            network.Send(Encoding.UTF8.GetBytes(Statics.USER_CMD + user + "\n"));
+            client.Send(Encoding.UTF8.GetBytes(Statics.USER_CMD + user + "\n"));
         }
 
         private void SendPass()
         {
-            network.Send(Encoding.UTF8.GetBytes(Statics.PASS_CMD + pass + "\n"));
+            client.Send(Encoding.UTF8.GetBytes(Statics.PASS_CMD + pass + "\n"));
         }
     }
 }

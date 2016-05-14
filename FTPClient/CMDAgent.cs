@@ -1,35 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FTPClient.CMDAgents;
 
 namespace FTPClient
 {
-    class CMDAgent : IAsyncEvent
+    class CMDAgent
     {
         private string host;
         private int port;
         private string user;
         private string pass;
-        private TCPNetwork client;
+        private TCPNetwork client = new TCPNetwork();
 
-        public Encoding encoding = Encoding.UTF8;
+        private Encoding encoding = Encoding.UTF8;
 
-        public Queue<string> cmdQueue = new Queue<string>();
+        private LoginAgent loginAgent;
+        private CWDAgent cwdAgent;
+        private PWDAgent pwdAgent;
+        private PASVAgent pasvAgent;
 
+        public delegate void Done(Statics.CMD_TYPE type, bool state, object result);
 
+        private Done listener;
 
-        private void OnRequest(string req)
+        public void OnDone(Statics.CMD_TYPE cmd, bool state, object result)
         {
-            
-        }
 
-        private void OnResponse(string rsp)
-        {
-            Console.WriteLine(rsp);
-            
+            if (listener != null)
+            {
+                listener(cmd, state, result);
+                
+            }
         }
 
         public CMDAgent(string host, int port, string user, string pass)
@@ -38,30 +44,20 @@ namespace FTPClient
             this.port = port;
             this.user = user;
             this.pass = pass;
-            client = new TCPNetwork();
+            loginAgent = new LoginAgent(host, port, user, pass, ref client, OnDone);
+            cwdAgent = new CWDAgent(ref client, OnDone);
+            pwdAgent = new PWDAgent(ref client, OnDone);
+            pasvAgent = new PASVAgent(ref client, OnDone);
         }
 
-        public void Login()
+        public void Command(Statics.CMD_TYPE cmd, Done onDoneListener, params string[] arg)
         {
-            if (!client.Connected)
-            {
-                client.SetAddress(host, port).SetEventHandler(this).Connect();
-            }
+            listener = onDoneListener;
+            Type t = typeof(CMDAgent);
+            FieldInfo info = t.GetField(cmd.ToString().ToLower() + "Agent");
+            (info.GetValue(this) as CommonAgent).Start(arg);
         }
 
-        public void OnConnect(bool ConnectState)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnSend()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnRecv(byte[] buffer)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

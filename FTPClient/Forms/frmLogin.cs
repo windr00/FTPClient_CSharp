@@ -15,10 +15,10 @@ namespace FTPClient.Forms
         private string user;
         private string pass;
 
-        public delegate void Close(string user, string pass);
+        public delegate void FormClose(string user, string pass);
 
-        public event Close OnClose;
-        public frmLogin(string user, string pass, Close c)
+        public event FormClose OnClose;
+        public frmLogin(string user, string pass, FormClose c)
         {
             this.user = user;
             this.pass = pass;
