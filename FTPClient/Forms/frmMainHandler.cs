@@ -9,53 +9,50 @@ namespace FTPClient
 {
     public partial class frmMain
     {
-        private void OnLOGINDone(bool state, object result)
+
+        private string pasvHost;
+        private int pasvPort;
+
+        private void OnError(Statics.CMD_TYPE type, string text)
         {
-            if (state)
-            {
-                agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, "/");
-            }
-            else
-            {
-                MessageBox.Show("Login failed\n" + result as string, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                pass = string.Empty;
-                frmMain_Load(null, null);
-            }
+            MessageBox.Show(type.ToString() + "failed\n" + text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void OnCWDDone(bool state, object result)
+        private void OnLOGINDone(object result)
         {
-            if (state)
-            {
-                agent.Command(Statics.CMD_TYPE.PWD, OnCMDDone);
+            agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, "/");
 
-            }
-            else
-            {
-                MessageBox.Show("CWD FAILED\n" + result as string, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
-        private void OnPWDDone(bool state, object result)
+        private void OnCWDDone(object result)
         {
-            if (state)
-            {
-                currentFolder = result as string;
-                txtCurDir.Text = currentFolder;
-                agent.Command(Statics.CMD_TYPE.PASV, OnCMDDone);
-            }
-            else
-            {
-                MessageBox.Show("PWD FAILED\n" + result as string, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            agent.Command(Statics.CMD_TYPE.PWD, OnCMDDone);
         }
 
-        private void OnPASVDone(bool state, object result)
+        private void OnPWDDone(object result)
         {
-            if (state)
-            {
-                
-            }
+            currentFolder = result as string;
+            txtCurDir.Text = currentFolder;
+            agent.Command(Statics.CMD_TYPE.TYPE, OnCMDDone);
+        }
+
+        private void OnPASVDone(object result)
+        {
+            var arr = result as object[];
+            pasvHost = arr[0] as string;
+            pasvPort = (int)arr[1];
+            agent.Command(Statics.CMD_TYPE.LIST, OnCMDDone, 
+                new [] {pasvHost, pasvPort.ToString()});
+        }
+
+        private void OnLISTDone(object result)
+        {
+            Console.WriteLine(result as string);
+        }
+
+        private void OnTYPEDone(object restult)
+        {
+            agent.Command(Statics.CMD_TYPE.PASV, OnCMDDone);
         }
 
     }

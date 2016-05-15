@@ -18,12 +18,8 @@ namespace FTPClient.CMDAgents
         
 
        
-        public LoginAgent(string host, int port, string user, string pass, ref TCPNetwork network, Done onDone) : base(ref network, onDone)
+        public LoginAgent( ref TCPNetwork network, Done onDone) : base(ref network, onDone)
         {
-            this.host = host;
-            this.port = port;
-            this.user = user;
-            this.pass = pass;
         }
         public void OnConnect(bool Connected)
         {
@@ -66,7 +62,6 @@ namespace FTPClient.CMDAgents
             else
             {
                 onDone(Statics.CMD_TYPE.LOGIN, false, "Server state unknown");
-                return;  
             }
             
         }
@@ -74,8 +69,13 @@ namespace FTPClient.CMDAgents
         public override void Start(string[] args)
         {
             client.SetEventHandler(this);
+            host = args[0];
+            port = int.Parse(args[1]);
+            user = args[2];
+            pass = args[3];
             if (!client.Connected)
             {
+                client.SetAddress(host, port);
                 client.Connect().Sync();
             }
             client.Recv();

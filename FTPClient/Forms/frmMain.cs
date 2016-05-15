@@ -42,8 +42,15 @@ namespace FTPClient
             {
                 Type t = typeof(frmMain);
                 MethodInfo info = t.GetMethod("On" + type.ToString() + "Done");
-                info.Invoke(this, new object[] {state, result});
-                
+                if (state)
+                {
+                    info.Invoke(this, new object[] {result});
+                }
+                else
+                {
+                    OnError(type, result as string);
+                }
+
             }
             catch (Exception e)
             {
@@ -69,8 +76,8 @@ namespace FTPClient
             }
             else
             {
-                agent = new CMDAgent(host, port, user, pass);
-                agent.Command(Statics.CMD_TYPE.LOGIN, OnCMDDone);
+                agent = new CMDAgent();
+                agent.Command(Statics.CMD_TYPE.LOGIN, OnCMDDone, host, port.ToString(), user, pass);
             }
         }
 
