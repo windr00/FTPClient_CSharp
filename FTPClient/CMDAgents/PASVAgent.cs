@@ -51,11 +51,11 @@ namespace FTPClient.CMDAgents
                     {
                         throw new Exception();
                     }
-                    onDone(Statics.CMD_TYPE.PWD, true, new object[] {host, port});
+                    onDone(Statics.CMD_TYPE.PASV, true, new object[] {host, port});
                 }
                 else
                 {
-                    onDone(Statics.CMD_TYPE.PWD, false, str);
+                    onDone(Statics.CMD_TYPE.PASV, false, str);
                 }
             }
             catch (Exception e)

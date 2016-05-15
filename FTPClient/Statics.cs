@@ -25,8 +25,8 @@ namespace FTPClient
         public static readonly string PWD_CMD = "PWD \n";
         public static readonly string CDUP_CMD = "CDUP \n";
         public static readonly string FEAT_CMD = "FEAT \n";
-        public static readonly string PORT_CMD = "PORT ";
-        public static readonly string PASV_CMD = "PASV ";
+        public static readonly string PORT_CMD = "PORT \n";
+        public static readonly string PASV_CMD = "PASV \n";
         public static readonly string AUTH_CMD = "AUTH ";
         public static readonly string RETR_CMD = "RETR ";
         public static readonly string STOR_CMD = "STOR ";
@@ -86,7 +86,7 @@ namespace FTPClient
 
         public static readonly string LIST_START = "150";
 
-        public static readonly string LIST_SUCC = "266";
+        public static readonly string LIST_SUCC = "226";
 
         public static readonly string LIST_FAILED = "500";
 

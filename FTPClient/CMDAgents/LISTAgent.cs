@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FTPClient.CMDAgents
@@ -13,14 +14,20 @@ namespace FTPClient.CMDAgents
 
         private byte[] recvBytes;
 
+        private TCPNetwork dataClient;
+        private dataChannelHandler handler;
+
         public LISTAgent(ref TCPNetwork client, Done onDone) : base(ref client, onDone)
-        {}
+        {
+            dataClient = new TCPNetwork();
+            handler = new dataChannelHandler(ref dataClient);
+        }
 
         public override void Start(string[] args)
         {
-            client.Send(Encoding.UTF8.GetBytes(Statics.LIST_CMD));
             host = args[0];
             port = int.Parse(args[1]);
+            client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.LIST_CMD));
         }
 
         public void OnConnect(bool ConnectState)
@@ -43,6 +50,8 @@ namespace FTPClient.CMDAgents
             }
             else if (str.StartsWith(Statics.LIST_SUCC))
             {
+                handler.locker.WaitOne();
+                handler.GetData(out recvBytes);
                 onDone(Statics.CMD_TYPE.LIST, true, Encoding.UTF8.GetString(recvBytes));
             }
             else
@@ -54,11 +63,12 @@ namespace FTPClient.CMDAgents
 
         class dataChannelHandler : IAsyncEvent
         {
+
+            public ManualResetEvent locker = new ManualResetEvent(false);
             private byte[] data;
             private TCPNetwork client;
-            public dataChannelHandler(ref TCPNetwork client, ref byte[] bytes)
+            public dataChannelHandler(ref TCPNetwork client)
             {
-                data = bytes;
                 this.client = client;
             }
 
@@ -75,13 +85,19 @@ namespace FTPClient.CMDAgents
             public void OnRecv(byte[] buffer)
             {
                 data = buffer;
+                client.Close();
+                locker.Set();
+            }
+
+            public void GetData(out byte[] bytes)
+            {
+                bytes = data;
             }
         }
 
         private void DataChannel()
         {
-            TCPNetwork dataClient = new TCPNetwork();
-            dataClient.SetEventHandler(new dataChannelHandler(ref dataClient, ref recvBytes))
+            dataClient.SetEventHandler(handler)
                 .SetAddress(host, port)
                 .Connect();
         }

@@ -38,10 +38,11 @@ namespace FTPClient
 
         private void OnCMDDone(Statics.CMD_TYPE type, bool state, object result)
         {
-            try
-            {
-                Type t = typeof(frmMain);
-                MethodInfo info = t.GetMethod("On" + type.ToString() + "Done");
+            
+                Type t = this.GetType();
+                var method = "On" + type.ToString() + "Done";
+               
+                MethodInfo info = t.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Instance, null, new []{typeof(object)}, null);
                 if (state)
                 {
                     info.Invoke(this, new object[] {result});
@@ -50,12 +51,6 @@ namespace FTPClient
                 {
                     OnError(type, result as string);
                 }
-
-            }
-            catch (Exception e)
-            {
-                this.Invoke(onDone, type, state, result);
-            }
         }
 
         public void OnfrmLoginClose(string user, string pass)

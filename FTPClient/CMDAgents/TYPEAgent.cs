@@ -14,7 +14,7 @@ namespace FTPClient.CMDAgents
 
         public override void Start(string[] args)
         {
-            client.Send(Encoding.UTF8.GetBytes(Statics.TYPE_CMD));
+            client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.TYPE_CMD));
         }
 
         public void OnConnect(bool ConnectState)

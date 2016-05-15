@@ -96,10 +96,11 @@ namespace FTPClient
                         byte[] buff = new byte[length];
                         Array.Copy(s.buffer,buff, length);
                         handler.OnRecv(buff);
+                        Console.WriteLine(Encoding.UTF8.GetString(buff));
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                            throw e;
                     }
                 }, state);
             }
@@ -125,6 +126,8 @@ namespace FTPClient
                         s.re.Set();
                         s.client.GetStream().EndWrite(ar);
                         handler.OnSend();
+                        Console.WriteLine(Encoding.UTF8.GetString(data));
+
                     }
                     catch (Exception e)
                     {
