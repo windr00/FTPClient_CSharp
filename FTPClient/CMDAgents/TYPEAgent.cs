@@ -8,24 +8,18 @@ namespace FTPClient.CMDAgents
 {
     class TYPEAgent : CommonAgent, IAsyncEvent
     {
-        public TYPEAgent(ref TCPNetwork client, Done onDone) : base(ref client, onDone)
-        {
-        }
+        public TYPEAgent(ref TCPNetwork client, Done onDone) : base(ref client, onDone) {}
 
-        public override void Start(string[] args)
-        {
-            client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.TYPE_CMD));
-        }
+        public override void Start(string[] args) => client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.TYPE_CMD));
+        
 
         public void OnConnect(bool ConnectState)
         {
             throw new NotImplementedException();
         }
 
-        public void OnSend()
-        {
-            client.Recv();
-        }
+        public void OnSend() => client.Recv();
+        
 
         public void OnRecv(byte[] buffer)
         {

@@ -68,7 +68,8 @@ namespace FTPClient
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                        handler.OnConnect(false);
+                        
                     }
                 }, state);
                 return this;

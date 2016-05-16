@@ -27,6 +27,10 @@ namespace FTPClient.CMDAgents
             {
                 onDone(Statics.CMD_TYPE.LOGIN, false, "Error connecting server");
             }
+            else
+            {
+                client.Recv();
+            }
         }
 
         public void OnSend()
@@ -76,9 +80,8 @@ namespace FTPClient.CMDAgents
             if (!client.Connected)
             {
                 client.SetAddress(host, port);
-                client.Connect().Sync();
+                client.Connect();
             }
-            client.Recv();
         }
 
         private void SendUser()
