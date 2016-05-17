@@ -55,6 +55,7 @@
     <Compile Include="CMDAgents\LoginAgent.cs" />
     <Compile Include="CMDAgents\PASVAgent.cs" />
     <Compile Include="CMDAgents\PWDAgent.cs" />
+    <Compile Include="CMDAgents\SYSTAgent.cs" />
     <Compile Include="CMDAgents\TYPEAgent.cs" />
     <Compile Include="FileBean.cs" />
     <Compile Include="FileSet.cs" />

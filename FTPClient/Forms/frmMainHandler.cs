@@ -22,7 +22,7 @@ namespace FTPClient
 
         private void OnLOGINDone(object result)
         {
-            agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, "/");
+            agent.Command(Statics.CMD_TYPE.SYST, OnCMDDone);
 
         }
 
@@ -57,11 +57,25 @@ namespace FTPClient
         private void OnLISTDone(object result)
         {
             Console.WriteLine(result as string);
+            fileSet = new FileSet();
         }
 
         private void OnTYPEDone(object restult)
         {
             agent.Command(Statics.CMD_TYPE.PASV, OnCMDDone);
+        }
+
+        private void OnSYSTDone(object result)
+        {
+            if ((result as string).ToUpper().Contains("WIN"))
+            {
+                stash = "\\";
+            }
+            else
+            {
+                stash = "/";
+            }
+            agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, stash);
         }
 
     }

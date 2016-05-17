@@ -59,7 +59,8 @@ namespace FTPClient
             ABOR,
             RNFR,
             RNTO,
-            SIZE
+            SIZE,
+            SYST
         }
 
         public static readonly string CONNECT_SUCC = "220";
@@ -89,6 +90,8 @@ namespace FTPClient
         public static readonly string LIST_SUCC = "226";
 
         public static readonly string LIST_FAILED = "500";
+
+        public static readonly string SYST_SUCC = "215";
 
     }
 }

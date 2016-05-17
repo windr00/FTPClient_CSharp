@@ -9,6 +9,10 @@ namespace FTPClient
 {
     public partial class frmMain
     {
-        private string currentFolder = String.Empty;
+        private string currentFolder = string.Empty;
+
+        private string stash = string.Empty;
+
+        private FileSet fileSet;
     }
 }

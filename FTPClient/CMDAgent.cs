@@ -29,6 +29,7 @@ namespace FTPClient
             agents.Add(Statics.CMD_TYPE.PASV, new PASVAgent(ref client, OnDone));
             agents.Add(Statics.CMD_TYPE.LIST, new LISTAgent(ref client, OnDone));
             agents.Add(Statics.CMD_TYPE.TYPE, new TYPEAgent(ref client, OnDone));
+            agents.Add(Statics.CMD_TYPE.SYST, new SYSTAgent(ref client, OnDone));
         }
 
         public void Command(Statics.CMD_TYPE cmd, Done onDoneListener, params string[] arg)
