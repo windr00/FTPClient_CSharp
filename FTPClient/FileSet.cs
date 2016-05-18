@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FTPClient
@@ -36,6 +37,41 @@ namespace FTPClient
                 lineList.RemoveAt(0);
             }
             lines = lineList.ToArray();
+            foreach (var i in lines)
+            {
+                FileBean file = new FileBean();
+                var cuts = i.Split(' ');
+                file.isDir = cuts[0].StartsWith("d");
+                bool fileNameStart = false;
+                bool sizeStart = false;
+                for (int j = 0; j < cuts.Length; j++)
+                {
+                    //if (!sizeStart && Regex.IsMatch(cuts[j], "^\\d[A-Za-z0-9]*[A-Za-z0-9]$"))
+                    //{
+                    //    var num = cuts[j].Substring(0, cuts[j].Length - 1);
+                    //    int size = 0;              
+                    //    sizeStart = true;
+                    //}
+                    if (cuts[j].Contains(":"))
+                    {
+                        fileNameStart = true;
+                        continue;
+                    }
+                    if (fileNameStart)
+                    {
+                        file.fileName += cuts[j];
+                        if (j != cuts.Length - 1)
+                        {
+                            file.fileName += " ";
+                        }
+                    }
+                }
+                if (!currentDir.EndsWith(stash))
+                {
+                    currentDir += stash;
+                }
+                file.fullPath = currentDir + stash + file.fileName;
+            }
         }
         
 
