@@ -56,8 +56,18 @@ namespace FTPClient
 
         private void OnLISTDone(object result)
         {
-            Console.WriteLine(result as string);
-            fileSet = new FileSet();
+            try
+            {
+                Console.WriteLine(result as string);
+                fileSet = new FileSet(stash);
+                fileSet.ParseFromString(currentFolder, result as string);
+                refreshDirTree(stash, fileSet.root.childFiles);
+                refreshFileListView(fileSet.GetChildFiles(currentFolder));
+            }
+            catch (InvalidOperationException e)
+            {
+                this.Invoke(onDone, Statics.CMD_TYPE.LIST, true, result);
+            }
         }
 
         private void OnTYPEDone(object restult)

@@ -19,7 +19,7 @@ namespace FTPClient
         public frmServerList()
         {
             InitializeComponent();
-            serverList.Add(new ServerProfile("192.168.1.101", 1026, "ran", "ran"));
+            serverList.Add(new ServerProfile("127.0.0.1", 1026, "ran", "ran"));
             RefreshList();
         }
 

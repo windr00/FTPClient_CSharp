@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.treeRemoteDir = new System.Windows.Forms.TreeView();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lsFiles = new System.Windows.Forms.ListView();
             this.lbCurDir = new System.Windows.Forms.Label();
             this.txtCurDir = new System.Windows.Forms.TextBox();
             this.lbRemoteTree = new System.Windows.Forms.Label();
@@ -42,14 +42,15 @@
             this.treeRemoteDir.Name = "treeRemoteDir";
             this.treeRemoteDir.Size = new System.Drawing.Size(299, 609);
             this.treeRemoteDir.TabIndex = 0;
+            this.treeRemoteDir.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeRemoteDir_NodeMouseClick);
             // 
-            // listView1
+            // lsFiles
             // 
-            this.listView1.Location = new System.Drawing.Point(335, 62);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(928, 609);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.lsFiles.Location = new System.Drawing.Point(335, 62);
+            this.lsFiles.Name = "lsFiles";
+            this.lsFiles.Size = new System.Drawing.Size(928, 609);
+            this.lsFiles.TabIndex = 1;
+            this.lsFiles.UseCompatibleStateImageBehavior = false;
             // 
             // lbCurDir
             // 
@@ -85,7 +86,7 @@
             this.Controls.Add(this.lbRemoteTree);
             this.Controls.Add(this.txtCurDir);
             this.Controls.Add(this.lbCurDir);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.lsFiles);
             this.Controls.Add(this.treeRemoteDir);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -99,7 +100,7 @@
         #endregion
 
         private System.Windows.Forms.TreeView treeRemoteDir;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lsFiles;
         private System.Windows.Forms.Label lbCurDir;
         private System.Windows.Forms.TextBox txtCurDir;
         private System.Windows.Forms.Label lbRemoteTree;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -76,6 +77,76 @@ namespace FTPClient
             }
         }
 
+        private void refreshDirTree(string parent, List<FileBean> files)
+        {
+            if (parent.Equals(stash))
+            {
+                treeRemoteDir.Nodes.Clear();
+                treeRemoteDir.Nodes.Add(new TreeNode(stash));
+            }
+            if (files == null)
+            {
+                return;
+            }
+            var cuts = parent.Split(stash.Equals("\\") ? '\\' : '/');
+            TreeNode node = treeRemoteDir.Nodes[0];
+            for (int i = 1; i < cuts.Length; i++)
+            {
+                for (int j = 0; j < node.Nodes.Count; j++)
+                {
+                    if (cuts[i].Equals(node.Nodes[j].Name))
+                    {
+                        node = node.Nodes[j];
+                        break;
+                    }
+                }
+            }
+            foreach (var i in files)
+            {
+                if (i.isDir)
+                {
+                    node.Nodes.Add(new TreeNode(i.fileName));
+                    if (!parent.EndsWith(stash))
+                    {
+                        parent += stash;
+                    }
+                    refreshDirTree(i.fullPath, i.childFiles);
+                }
+            }
+        }
 
+        private void refreshFileListView(List<FileBean> files)
+        {
+            lsFiles.View = View.LargeIcon;
+            ImageList images = new ImageList();
+            images.ImageSize = new Size(files[0].fileLargeIcon.Width * 2, files[0].fileLargeIcon.Height * 2);
+            foreach (var f in files)
+            {
+                images.Images.Add(f.fileLargeIcon);
+            }
+            lsFiles.Items.Clear();
+            lsFiles.LargeImageList = images;
+            
+            lsFiles.BeginUpdate();
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.ImageIndex = i;
+                lvi.Text = files[i].fileName;
+                lsFiles.Items.Add(lvi);
+            }
+
+            lsFiles.EndUpdate();
+        }
+
+        private void treeRemoteDir_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+
+            var path = e.Node.FullPath.Substring(1);
+            path = path.Replace("\\", stash);
+            currentFolder = path;
+            agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, currentFolder);
+        }
     }
 }

@@ -19,8 +19,12 @@ namespace FTPClient
 
         public string fullPath { get; set; } = string.Empty;
 
-        public Icon fileIcon { get; set; } = SystemIcons.Application;
+        public Icon fileLargeIcon { get; set; } = SystemIcons.WinLogo;
 
-        public List<FileBean> childFiles { get; set; } = null;
+        public Icon fileSmallIcon { get; set; } = SystemIcons.WinLogo;
+
+        public string fileDescription { get; set; }
+
+        public List<FileBean> childFiles { get; set; } = new List<FileBean>();
     }
 }
