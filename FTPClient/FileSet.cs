@@ -39,34 +39,31 @@ namespace FTPClient
 
         private readonly string stash;
 
-        public FileBean root { get; private set; }
+        private List<FileBean> files;
 
         public FileSet(string stash)
         {
             this.stash = stash;
-            root = new FileBean();
-            root.fileName = stash;
-            root.fullPath = stash;
-            root.isDir = true;
+            files = new List<FileBean>();
         }
 
-        public List<FileBean> GetChildFiles(string parent)
+        public List<FileBean> GetAllFiles(string parent)
         {
-            var cuts = parent.Split(stash.Equals("\\") ? '\\' : '/');
-            FileBean temp = root;
-            for (int i = 1; i < cuts.Length; i++)
+
+            return files;
+        }
+
+        public FileBean GetFile(string path)
+        {
+            
+            foreach (var f in files)
             {
-                foreach (var f in temp.childFiles )
+                if (f.fullPath.Equals(path))
                 {
-                    if (f.fileName.Equals(cuts[i]) && f.isDir)
-                    {
-                        temp = f;
-                        break;
-                        
-                    }
-                }
+                    return f;
+                }   
             }
-            return temp.childFiles;
+           return null;
         }
 
         void GetExtsIconAndDescription(string ext, out Icon largeIcon, out Icon smallIcon, out string description)
@@ -137,49 +134,10 @@ namespace FTPClient
         }
 
 
-        private FileBean GetCurrentParentFile(string currentDir)
-        {
-            var cuts = currentDir.Split(stash.Equals("\\") ? '\\' : '/');
-            FileBean temp = root;
-            foreach (var dir in cuts)
-            {
-                if (dir.Equals(string.Empty))
-                {
-                    continue;
-                }
-                foreach (var file in temp.childFiles)
-                {
-                    if (file.fileName.Equals(dir) && file.isDir)
-                    {
-                        temp = file;
-                        break;
-                    }
-                }
-            }
-            return temp;
-            
-        }
+
 
         public void ParseFromString(string currentDir, string listData)
         {
-            string[] paths = currentDir.Split(stash.ToCharArray());
-            FileBean cur;
-            if (currentDir.Equals(stash))
-            {
-                cur = root;
-            }
-            else
-            {
-                cur = GetCurrentParentFile(currentDir);
-            }
-            cur.childFiles.Clear();
-            if (paths[1].Equals(string.Empty))
-            {
-                root.fullPath = stash;
-                root.isDir = true;
-                root.fileName = stash;
-            }
-            string withoutR = listData.Replace('\r', '\n');
             string[] lines = listData.Split('\n');
             List<string> lineList = new List<string>(lines);
             lineList.RemoveAll(new Predicate<string>(s => s.Equals(string.Empty)));
@@ -227,7 +185,8 @@ namespace FTPClient
                     file.fileSmallIcon = small;
                     file.fileDescription = des;
                 }
-                    cur.childFiles.Add(file);
+
+                files.Add(file);
             }
         }
         

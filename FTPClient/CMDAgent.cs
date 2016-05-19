@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,12 +16,33 @@ namespace FTPClient
 
         private Encoding encoding = Encoding.UTF8;
         public delegate void Done(Statics.CMD_TYPE type, bool state, object result);
+        
+        private Statics.CMD_TYPE lastOP;
+        private string[] lastArgs;
 
         private Dictionary<Statics.CMD_TYPE, CommonAgent> agents = new Dictionary<Statics.CMD_TYPE, CommonAgent>();
 
-        private Done listener;
+        private event Done listener;
 
-        public void OnDone(Statics.CMD_TYPE cmd, bool state, object result) => listener?.Invoke(cmd, state, result);
+
+        private void reloginDone(Statics.CMD_TYPE type, bool state, object result)
+        {
+            agents[lastOP].Start(lastArgs);
+        }
+
+        public void OnDone(Statics.CMD_TYPE cmd, bool state, object result)
+        {
+            var callList = listener.GetInvocationList();
+            foreach (Delegate t in callList)
+            {
+                if (t.Method.Name.Equals("reloginDone"))
+                {
+                    t.Method.Invoke(this, null);
+                    return;
+                }
+            }
+            listener?.Invoke(cmd, state, result);
+        }
         public CMDAgent()
         {
             agents.Add(Statics.CMD_TYPE.LOGIN, new LoginAgent(ref client, OnDone));
@@ -35,6 +57,13 @@ namespace FTPClient
         public void Command(Statics.CMD_TYPE cmd, Done onDoneListener, params string[] arg)
         {
             listener = onDoneListener;
+            if (!cmd.Equals(Statics.CMD_TYPE.LOGIN) && !client.Connected)
+            {
+                lastOP = cmd;
+                lastArgs = arg;
+                listener += reloginDone;
+                agents[Statics.CMD_TYPE.LOGIN].Start(null);
+            }
             agents[cmd].Start(arg);
         }
 

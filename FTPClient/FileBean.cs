@@ -24,7 +24,6 @@ namespace FTPClient
         public Icon fileSmallIcon { get; set; } = SystemIcons.WinLogo;
 
         public string fileDescription { get; set; }
-
-        public List<FileBean> childFiles { get; set; } = new List<FileBean>();
+        
     }
 }

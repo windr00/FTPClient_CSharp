@@ -86,6 +86,7 @@ namespace FTPClient.CMDAgents
             {
                 data = buffer;
                 client.Close();
+                
                 locker.Set();
             }
 
@@ -97,6 +98,7 @@ namespace FTPClient.CMDAgents
 
         private void DataChannel()
         {
+            
             dataClient.SetEventHandler(handler)
                 .SetAddress(host, port)
                 .Connect();

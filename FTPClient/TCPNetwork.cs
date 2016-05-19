@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,6 +58,7 @@ namespace FTPClient
                 var state = new AsyncState();
                 state.client = client;
                 state.SetAsyncEvent(ref this.re);
+                
                 client.BeginConnect(host, port,delegate(IAsyncResult ar)
                 {
                     try
@@ -101,7 +103,7 @@ namespace FTPClient
                     }
                     catch (Exception e)
                     {
-                            throw e;
+                        throw e;
                     }
                 }, state);
             }
@@ -154,8 +156,9 @@ namespace FTPClient
         {
             try
             {
+                client.GetStream().Close();
                 client.Close();
-                
+                client = new TcpClient();
                 return this;
             }
             catch (Exception e)

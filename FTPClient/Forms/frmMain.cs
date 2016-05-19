@@ -21,6 +21,7 @@ namespace FTPClient
         private string pass;
         private CMDAgent agent;
 
+        private Stack<string> folderStack = new Stack<string>();
 
         private delegate void CMDDone(Statics.CMD_TYPE type, bool state, string result);
 
@@ -77,43 +78,7 @@ namespace FTPClient
             }
         }
 
-        private void refreshDirTree(string parent, List<FileBean> files)
-        {
-            if (parent.Equals(stash))
-            {
-                treeRemoteDir.Nodes.Clear();
-                treeRemoteDir.Nodes.Add(new TreeNode(stash));
-            }
-            if (files == null)
-            {
-                return;
-            }
-            var cuts = parent.Split(stash.Equals("\\") ? '\\' : '/');
-            TreeNode node = treeRemoteDir.Nodes[0];
-            for (int i = 1; i < cuts.Length; i++)
-            {
-                for (int j = 0; j < node.Nodes.Count; j++)
-                {
-                    if (cuts[i].Equals(node.Nodes[j].Name))
-                    {
-                        node = node.Nodes[j];
-                        break;
-                    }
-                }
-            }
-            foreach (var i in files)
-            {
-                if (i.isDir)
-                {
-                    node.Nodes.Add(new TreeNode(i.fileName));
-                    if (!parent.EndsWith(stash))
-                    {
-                        parent += stash;
-                    }
-                    refreshDirTree(i.fullPath, i.childFiles);
-                }
-            }
-        }
+       
 
         private void refreshFileListView(List<FileBean> files)
         {
@@ -138,15 +103,105 @@ namespace FTPClient
             }
 
             lsFiles.EndUpdate();
+            lsFiles.Enabled = true;
+        }
+        
+
+        private void lsFiles_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (lsFiles.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            var filename = currentFolder + lsFiles.SelectedItems[0].Text;
+            var file = fileSet.GetFile(filename);
+            if (file.isDir)
+            {
+                lsFiles.Enabled = false;
+                agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, file.fileName);
+            }
         }
 
-        private void treeRemoteDir_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void btnUp_Click(object sender, EventArgs e)
+        {
+            if (lsFiles.Enabled)
+            {
+                lsFiles.Enabled = false;
+                folderStack.Push(currentFolder);
+                agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, "..");
+            }
+            else
+            {
+                MessageBox.Show("Please wait for current operation to be done", "Busy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+            if (lsFiles.Enabled)
+            {
+                if (folderStack.Count != 0)
+                {
+                    lsFiles.Enabled = false;
+                    var path = folderStack.Pop();
+                    agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, path);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please wait for current operation to be done", "Busy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            if (lsFiles.Enabled)
+            {
+                lsFiles.Enabled = false;
+                agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, currentFolder);
+            }
+            else
+            {
+                MessageBox.Show("Please wait for current operation to be done", "Busy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void lsFiles_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            Console.WriteLine(e.Item as ListViewItem);
+        }
+
+        private void lsFiles_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Link;
+            }
+        }
+
+        private void lsFiles_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                String[] files = (String[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (var s in files)
+                {
+                    Console.WriteLine(s);
+                }
+            }
+        }
+
+        private void lsFiles_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Link;
+            }
+        }
+
+        private void lsFiles_DragLeave(object sender, EventArgs e)
         {
 
-            var path = e.Node.FullPath.Substring(1);
-            path = path.Replace("\\", stash);
-            currentFolder = path;
-            agent.Command(Statics.CMD_TYPE.CWD, OnCMDDone, currentFolder);
         }
     }
 }

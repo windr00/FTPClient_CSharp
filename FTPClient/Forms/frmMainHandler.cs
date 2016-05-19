@@ -16,6 +16,7 @@ namespace FTPClient
         private void OnError(Statics.CMD_TYPE type, string text)
         {
             MessageBox.Show(type.ToString() + "failed\n" + text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            lsFiles.Enabled = true;
         }
 
         
@@ -34,6 +35,10 @@ namespace FTPClient
         private void OnPWDDone(object result)
         {
             currentFolder = result as string;
+            if (!currentFolder.EndsWith(stash))
+            {
+                currentFolder += stash;
+            }
             try
             {
                 txtCurDir.Text = currentFolder;
@@ -61,8 +66,7 @@ namespace FTPClient
                 Console.WriteLine(result as string);
                 fileSet = new FileSet(stash);
                 fileSet.ParseFromString(currentFolder, result as string);
-                refreshDirTree(stash, fileSet.root.childFiles);
-                refreshFileListView(fileSet.GetChildFiles(currentFolder));
+                refreshFileListView(fileSet.GetAllFiles(currentFolder));
             }
             catch (InvalidOperationException e)
             {

@@ -36,7 +36,15 @@ namespace FTPClient.CMDAgents
         public override void Start(string[] args)
         {
             var to = args[0];
-            var str = Statics.CWD_CMD + to + "\n";
+            string str = string.Empty;
+            if (args[0].Equals(".."))
+            {
+                str = Statics.CDUP_CMD;
+            }
+            else
+            {
+                str = Statics.CWD_CMD + to + "\n";
+            }
             client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(str));
 
         }
