@@ -85,9 +85,15 @@ namespace FTPClient.CMDAgents
             public void OnRecv(byte[] buffer)
             {
                 data = buffer;
-                client.Close();
-                
-                locker.Set();
+                if (client.RecvFinished())
+                {
+                    client.Close();
+                    locker.Set();
+                }
+                else
+                {
+                    client.Recv();
+                }
             }
 
             public void GetData(out byte[] bytes)

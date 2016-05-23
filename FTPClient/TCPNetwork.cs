@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -166,6 +167,11 @@ namespace FTPClient
                 throw e;
             }
 
+        }
+
+        public bool RecvFinished()
+        {
+            return (client.Available == 0);
         }
 
     }

@@ -78,7 +78,17 @@ namespace FTPClient
             }
         }
 
-       
+        private void GetFileCallBack(Statics.CMD_TYPE type, bool state, object result)
+        {
+            switch (type)
+            {
+                case Statics.CMD_TYPE.PASV:
+                {
+                    agent.Command(Statics.CMD_TYPE.RETR, GetFileCallBack, );
+                        break;
+                }
+            }
+        }
 
         private void refreshFileListView(List<FileBean> files)
         {
