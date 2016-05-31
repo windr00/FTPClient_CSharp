@@ -10,7 +10,7 @@ using FTPClient.CMDAgents;
 
 namespace FTPClient
 {
-    class CMDAgent
+    public class CMDAgent
     {
         private TCPNetwork client = new TCPNetwork();
 

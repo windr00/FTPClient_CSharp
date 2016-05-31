@@ -1,4 +1,4 @@
-﻿namespace FTPClient
+﻿namespace FTPClient.Forms
 {
     partial class frmMain
     {
@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lsFiles = new System.Windows.Forms.ListView();
             this.lbCurDir = new System.Windows.Forms.Label();
             this.txtCurDir = new System.Windows.Forms.TextBox();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnRedo = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.menuFileOp = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuEmptyOp = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuFileOp.SuspendLayout();
             this.SuspendLayout();
             // 
             // lsFiles
@@ -50,6 +55,7 @@
             this.lsFiles.DragOver += new System.Windows.Forms.DragEventHandler(this.lsFiles_DragOver);
             this.lsFiles.DragLeave += new System.EventHandler(this.lsFiles_DragLeave);
             this.lsFiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lsFiles_MouseDoubleClick);
+            this.lsFiles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lsFiles_MouseClick);
             // 
             // lbCurDir
             // 
@@ -98,6 +104,26 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // menuFileOp
+            // 
+            this.menuFileOp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem});
+            this.menuFileOp.Name = "menuFileOp";
+            this.menuFileOp.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.menuFileOp.Size = new System.Drawing.Size(153, 48);
+            this.menuFileOp.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuFileOp_ItemClicked);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem.Text = "Save to";
+            // 
+            // menuEmptyOp
+            // 
+            this.menuEmptyOp.Name = "menuEmptyOp";
+            this.menuEmptyOp.Size = new System.Drawing.Size(61, 4);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -113,6 +139,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmMain";
             this.Shown += new System.EventHandler(this.frmMain_Load);
+            this.menuFileOp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,6 +152,9 @@
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Button btnRedo;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ContextMenuStrip menuFileOp;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip menuEmptyOp;
     }
 }
 

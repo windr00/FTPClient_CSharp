@@ -23,10 +23,11 @@ namespace FTPClient.CMDAgents
             handler = new dataChannelHandler(ref dataClient);
         }
 
-        public override void Start(string[] args)
+        public override void Start(object[] args)
         {
-            host = args[0];
-            port = int.Parse(args[1]);
+            
+            host = args[0] as string;
+            port = int.Parse(args[1] as string);
             client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.LIST_CMD));
         }
 

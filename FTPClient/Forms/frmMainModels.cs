@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 
-namespace FTPClient
+namespace FTPClient.Forms
 {
     public partial class frmMain
     {
         private string currentFolder = string.Empty;
 
         private string stash = string.Empty;
+
+        private List<string> filePathList = new List<string>();
 
         private FileSet fileSet;
     }

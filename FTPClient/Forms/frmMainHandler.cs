@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FTPClient
+namespace FTPClient.Forms
 {
     public partial class frmMain
     {
@@ -66,7 +62,7 @@ namespace FTPClient
                 Console.WriteLine(result as string);
                 fileSet = new FileSet(stash);
                 fileSet.ParseFromString(currentFolder, result as string);
-                refreshFileListView(fileSet.GetAllFiles(currentFolder));
+                refreshFileListView(fileSet.GetAllFiles());
             }
             catch (InvalidOperationException e)
             {

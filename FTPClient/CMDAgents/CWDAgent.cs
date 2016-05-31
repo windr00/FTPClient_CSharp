@@ -33,7 +33,7 @@ namespace FTPClient.CMDAgents
             }
         }
 
-        public override void Start(string[] args)
+        public override void Start(object[] args)
         {
             var to = args[0];
             string str = string.Empty;

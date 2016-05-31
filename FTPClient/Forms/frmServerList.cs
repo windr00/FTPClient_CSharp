@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FTPClient
+namespace FTPClient.Forms
 {
     public partial class frmServerList : Form
     {
@@ -93,7 +87,7 @@ namespace FTPClient
             if (selectedServer != -1)
             {
                 var server = serverList[selectedServer];
-                frmMain main = new frmMain(server.host, server.port, server.user, server.pass);
+                Forms.frmMain main = new Forms.frmMain(server.host, server.port, server.user, server.pass);
                 main.Show();
             }
         }

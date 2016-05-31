@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FTPClient
 {
-    class Statics
+    public class Statics
     {
 
         public static readonly int NET_READ_BUFFER_LENGTH = 65535;
@@ -92,6 +92,14 @@ namespace FTPClient
         public static readonly string LIST_FAILED = "500";
 
         public static readonly string SYST_SUCC = "215";
+
+        public static readonly string SIZE_SUCC = "213";
+        public static readonly string SIZE_FIALED = "500";
+
+        public static readonly string RETR_STRART_A_RETURN = "150";
+        public static readonly string RETR_STRART_I_RETURN = "150";
+        public static readonly string RETR_SUCC_RETURN = "226";
+        public static readonly string RETR_FAILED_RETURN = "550";
 
     }
 }

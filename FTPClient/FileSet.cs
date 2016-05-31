@@ -14,7 +14,7 @@ using Microsoft.Win32;
 namespace FTPClient
 {
 
-    class FileSet
+    public class FileSet
     {
         public struct HICON__
         {
@@ -47,9 +47,8 @@ namespace FTPClient
             files = new List<FileBean>();
         }
 
-        public List<FileBean> GetAllFiles(string parent)
+        public List<FileBean> GetAllFiles()
         {
-
             return files;
         }
 

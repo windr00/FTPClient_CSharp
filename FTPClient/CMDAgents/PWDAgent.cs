@@ -42,7 +42,7 @@ namespace FTPClient.CMDAgents
             }
         }
 
-        public override void Start(string[] args)
+        public override void Start(object[] args)
         {
             var str = Encoding.UTF8.GetBytes(Statics.PWD_CMD);
             client.SetEventHandler(this).Send(str);

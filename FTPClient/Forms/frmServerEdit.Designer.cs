@@ -1,4 +1,4 @@
-﻿namespace FTPClient
+﻿namespace FTPClient.Forms
 {
     partial class frmServerEdit
     {

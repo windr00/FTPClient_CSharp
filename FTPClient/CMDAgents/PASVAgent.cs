@@ -13,7 +13,7 @@ namespace FTPClient.CMDAgents
         {
         }
 
-        public override void Start(string[] args)
+        public override void Start(object[] args)
         {
             client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.PASV_CMD));
         }

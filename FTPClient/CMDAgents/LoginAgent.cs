@@ -70,15 +70,15 @@ namespace FTPClient.CMDAgents
             
         }
 
-        public override void Start(string[] args)
+        public override void Start(object[] args)
         {
             client.SetEventHandler(this);
             if (args != null)
             {
-                host = args[0];
-                port = int.Parse(args[1]);
-                user = args[2];
-                pass = args[3];
+                host = args[0] as string;
+                port = int.Parse(args[1] as string);
+                user = args[2] as string;
+                pass = args[3] as string;
             }
             if (!client.Connected)
             {

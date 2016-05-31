@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FTPClient
 {
-    class FileBean
+    public class FileBean
     {
         public bool isDir { get; set; } = false;
 

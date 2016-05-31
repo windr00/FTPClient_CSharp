@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using FTPClient.Forms;
 
-namespace FTPClient
+namespace FTPClient.Forms
 {
     public partial class frmMain : Form
     {
@@ -75,18 +68,6 @@ namespace FTPClient
             {
                 agent = new CMDAgent();
                 agent.Command(Statics.CMD_TYPE.LOGIN, OnCMDDone, host, port.ToString(), user, pass);
-            }
-        }
-
-        private void GetFileCallBack(Statics.CMD_TYPE type, bool state, object result)
-        {
-            switch (type)
-            {
-                case Statics.CMD_TYPE.PASV:
-                {
-                    agent.Command(Statics.CMD_TYPE.RETR, GetFileCallBack, );
-                        break;
-                }
             }
         }
 
@@ -212,6 +193,43 @@ namespace FTPClient
         private void lsFiles_DragLeave(object sender, EventArgs e)
         {
 
+        }
+
+        private void lsFiles_MouseClick(object sender, MouseEventArgs e)
+        {
+            filePathList.Clear();
+            
+            foreach (var i in lsFiles.SelectedItems)
+            {
+                var item = i as ListViewItem;
+                filePathList.Add(item.Name);
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                if (filePathList.Count == 0)
+                {
+                    menuEmptyOp.Show();
+                    menuEmptyOp.Location = e.Location;
+                }
+                else
+                {
+                    menuFileOp.Location = e.Location;
+                    menuFileOp.Show();
+                }
+            }
+        }
+
+        private void menuFileOp_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "Save to")
+            {
+                List<FileBean> fileBeans = new List<FileBean>();
+                foreach (var item in filePathList)
+                {
+                    fileBeans.Add(fileSet.GetFile(item));
+                }
+            }
         }
     }
 }

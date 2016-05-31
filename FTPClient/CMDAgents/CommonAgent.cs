@@ -20,6 +20,6 @@ namespace FTPClient.CMDAgents
             this.client = client;
             this.onDone = onDone;
         }
-        public abstract void Start(string[] args);
+        public abstract void Start(object[] args);
     }
 }

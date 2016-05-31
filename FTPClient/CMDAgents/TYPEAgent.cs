@@ -10,7 +10,7 @@ namespace FTPClient.CMDAgents
     {
         public TYPEAgent(ref TCPNetwork client, Done onDone) : base(ref client, onDone) {}
 
-        public override void Start(string[] args) => client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.TYPE_CMD));
+        public override void Start(object[] args) => client.SetEventHandler(this).Send(Encoding.UTF8.GetBytes(Statics.TYPE_CMD));
         
 
         public void OnConnect(bool ConnectState)
